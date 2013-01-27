@@ -545,7 +545,7 @@ public class ColorPickerView extends View {
 
 		if(update){
 
-			if(mListener != null){
+			if(mListener != null && action == MotionEvent.ACTION_UP){
 				mListener.onColorChanged(Color.HSVToColor(mAlpha, new float[]{mHue, mSat, mVal}));
 			}
 
