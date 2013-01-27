@@ -469,7 +469,8 @@ public class ColorPickerView extends View {
 
 		boolean update = false;
 
-		if(event.getAction() == MotionEvent.ACTION_MOVE){
+		int action = event.getAction();
+		if(action == MotionEvent.ACTION_MOVE){
 
 			switch(mLastTouchedPanel){
 
