@@ -30,6 +30,7 @@ import android.graphics.Paint.Align;
 import android.graphics.Paint.Style;
 import android.graphics.Shader.TileMode;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -468,7 +469,6 @@ public class ColorPickerView extends View {
 
 		boolean update = false;
 
-
 		if(event.getAction() == MotionEvent.ACTION_MOVE){
 
 			switch(mLastTouchedPanel){
@@ -498,7 +498,7 @@ public class ColorPickerView extends View {
 				mVal = val;
 
 				update = true;
-
+				
 				break;
 
 			case PANEL_HUE:
@@ -513,7 +513,7 @@ public class ColorPickerView extends View {
 				}
 
 				mHue = hue;
-
+				
 				update = true;
 
 				break;
@@ -535,17 +535,13 @@ public class ColorPickerView extends View {
 					}
 
 					mAlpha = alpha;
-
-
+					
 					update = true;
 				}
 
 				break;
 			}
-
-
 		}
-
 
 		if(update){
 
@@ -566,7 +562,8 @@ public class ColorPickerView extends View {
 
 		boolean update = false;
 
-		switch(event.getAction()){
+		int action = event.getAction();
+		switch(action){
 
 		case MotionEvent.ACTION_DOWN:
 
@@ -592,11 +589,11 @@ public class ColorPickerView extends View {
 
 		}
 
-		if(update){
+		if(mListener != null && action == MotionEvent.ACTION_UP){
+			mListener.onColorChanged(Color.HSVToColor(mAlpha, new float[]{mHue, mSat, mVal}));
+		}
 
-			if(mListener != null){
-				mListener.onColorChanged(Color.HSVToColor(mAlpha, new float[]{mHue, mSat, mVal}));
-			}
+		if(update){
 
 			invalidate();
 			return true;
